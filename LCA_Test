@@ -1,0 +1,53 @@
+
+import Lowest_Common_ansestor1
+import unittest
+
+class test_LCA(unittest.TestCase):
+
+    def test_LCA(self):
+
+        root = Lowest_Common_ansestor1.Node(10)
+        root.left = Lowest_Common_ansestor1.Node(4)
+        root.left.right = Lowest_Common_ansestor1.Node(5)
+        root.left.left = Lowest_Common_ansestor1.Node(3)
+        root.right = Lowest_Common_ansestor1.Node(12)
+        root.right.right = Lowest_Common_ansestor1.Node(13)
+
+        #Test when root == null
+        self.assertEqual(Lowest_Common_ansestor1.findLCA(None, 1, 3), -1) 
+
+        #Test when root is defined
+        self.assertEqual(Lowest_Common_ansestor1.findLCA(root, 5, 3 ), 4) 
+        self.assertEqual(Lowest_Common_ansestor1.findLCA(root, 4, 5), 4)
+        self.assertEqual(Lowest_Common_ansestor1.findLCA(root, 13, 4), 10)
+       
+    def test_findPath(self):
+        
+        #Insert tree
+        root = Lowest_Common_ansestor1.Node(10)
+        root.left = Lowest_Common_ansestor1.Node(4)
+        root.left.right = Lowest_Common_ansestor1.Node(5)
+        root.left.left = Lowest_Common_ansestor1.Node(3)
+        root.right = Lowest_Common_ansestor1.Node(12)
+        root.right.right = Lowest_Common_ansestor1.Node(13)
+        path = []
+        path2 = []
+
+        #Test defined path
+        self.assertEqual(Lowest_Common_ansestor1.findPath(root, path, 5 ), True)
+        self.assertEqual(Lowest_Common_ansestor1.findPath(root, path, 13), True)
+
+        #Test undefined path
+        self.assertEqual(Lowest_Common_ansestor1.findPath(root.right, path2, 3), False)
+        self.assertEqual(Lowest_Common_ansestor1.findPath(None, path2, 3), False)
+
+        #Test value k not in tree
+        self.assertEqual(Lowest_Common_ansestor1.findPath(root, path, 17), False)
+
+
+
+    
+        
+
+
+        
