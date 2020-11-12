@@ -1,0 +1,103 @@
+from LCA_DAG import DAG
+import unittest
+
+dag = None
+
+class MyTestCase(unittest.TestCase):
+
+    # test for add node
+    def test_add_node(self):
+        global dag
+        dag = DAG()
+        dag.add_node('A')
+        self.assertTrue(dag.graph == {'A': []})
+
+    #test for duplicate nodes
+    def test_add_node3(self):
+        self.assertFalse(dag.add_node('A'))
+
+    #test for node not in tree
+    def test_add_node2(self):
+        dag = DAG()
+        dag.add_node('B')
+        self.assertFalse(dag.graph == {'A': []})
+
+    def test_DAG(self):
+        dag = DAG()
+        dag.add_node('B')
+        dag.add_node('C')
+        dag.add_edge('B','C')
+        dag.add_node('D')
+        dag.add_node('E')
+        dag.add_edge('C', 'D')
+        dag.add_edge('D', 'B')
+      
+        self.assertFalse(dag.DFSWrapper(dag.graph))
+
+    def test_DAG2(self):
+        dag = DAG()
+        dag.add_node('A')
+        dag.add_node('B')
+        dag.add_edge('A','B')
+        self.assertTrue(dag)
+
+
+    # test for LCA between two nodes 
+    def test_LCA(self):
+        dag = DAG()
+        dag.add_node('A')
+        dag.add_node('B')
+        dag.add_node('C')
+        dag.add_node('D')
+        dag.add_node('E')
+        dag.add_node('F')
+        dag.add_node('G')
+        dag.add_node('H')
+        dag.add_edge('A','B')
+        dag.add_edge('A', 'C')
+        dag.add_edge('A', 'D')
+        dag.add_edge('B', 'C')
+        dag.add_edge('C', 'E')
+        dag.add_edge('B', 'F')
+        dag.add_edge('E', 'F')
+        dag.add_edge('F', 'H')
+        dag.add_edge('D', 'G')
+        dag.LCA_DFS_Wrapper(dag.graph, 'H','E')
+        self.assertTrue(dag.LCA_DFS_Wrapper(dag.graph, 'H','E')== 'E')
+
+    # Test LCA for defined nodes
+    def test_LCA2(self):
+        dag = DAG()
+        dag.add_node('A')
+        dag.add_node('B')
+        dag.add_node('C')
+        dag.add_node('D')
+        dag.add_node('E')
+       
+
+        dag.add_edge('A', 'B')
+        dag.add_edge('A', 'C')
+        dag.add_edge('A', 'D')
+        dag.add_edge('B', 'E')
+        dag.add_edge('C', 'B')
+        dag.add_edge('D', 'C')
+        dag.add_edge('D', 'E')
+
+        self.assertTrue(dag.LCA_DFS_Wrapper(dag.graph, 'E', 'C') == 'A')
+
+    # test for LCA of a node and a non-node in graph
+    def test_LCA3(self):
+        dag = DAG()
+        dag.add_node('A')
+        dag.add_node('B')
+        dag.add_edge('A','B')
+        self.assertTrue(dag.LCA_DFS_Wrapper(dag.graph, 'A', 'G') == None)
+
+    # test for LCA of an empty graph
+    def test_LCA4(self):
+        dag = DAG()
+        self.assertTrue(dag.LCA_DFS_Wrapper(dag.graph, None, None) == None)
+
+
+if __name__ == '__main__':
+    unittest.main()
